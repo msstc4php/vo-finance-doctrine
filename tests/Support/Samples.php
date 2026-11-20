@@ -77,8 +77,8 @@ final class Samples
     }
 
     /**
-     * Per type: the type name, a canonical sample, the column length (0 for a text type without a bound), an invalid stored value and
-     * whether the sample has the longest accepted length (then one more character must be refused).
+     * Per type: the type name, a canonical sample, the column length (0 for a text type without a bound), an invalid
+     * stored value and whether the sample has the longest accepted length (then one more character must be refused).
      *
      * @return iterable<string, array{non-empty-string, StringConvertible, non-negative-int, non-empty-string, bool}>
      */

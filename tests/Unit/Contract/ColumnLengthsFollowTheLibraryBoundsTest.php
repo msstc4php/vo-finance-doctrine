@@ -23,9 +23,9 @@ final class ColumnLengthsFollowTheLibraryBoundsTest extends TestCase
     private const int VARCHAR_LIMIT = 4000;
 
     /**
-     * Fixed-width identifiers and the references have no constant in the library; the at-max samples of the string
-     * type tests prove them. The QR-bill is not a constant either: 997 is SIX IG 2.3 section 6.2 (quoted in FINANCE.md), and the string
-     * type tests store the longest payload the element limits of Table 8 allow (902 characters).
+     * Fixed-width identifiers and the references have no constant in the library; the at-max samples of the string type
+     * tests prove them. The QR-bill is not a constant either: 997 is SIX IG 2.3 section 6.2 (quoted in FINANCE.md), and
+     * the string type tests store the longest payload the element limits of Table 8 allow (902 characters).
      *
      * @return iterable<string, array{non-empty-string, int}>
      */
