@@ -52,10 +52,11 @@ final class ColumnLengthsFollowTheLibraryBoundsTest extends TestCase
 
     public function testTheLongestTable8QrBillIs902CharactersAndFitsTheColumn(): void
     {
+        TypeRegistrar::registerAll();
         $length = \strlen(Samples::longestQrBill()->value);
 
         self::assertSame(902, $length);
-        self::assertLessThan(997, $length);
+        self::assertSame('VARCHAR(997)', Type::getType('fin_qr_bill')->getSQLDeclaration([], new SQLitePlatform()));
     }
 
     public function testAnEmvcoPayloadBoundAboveTheVarcharLimitMapsToAClob(): void
