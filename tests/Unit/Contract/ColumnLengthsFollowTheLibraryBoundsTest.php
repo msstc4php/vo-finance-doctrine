@@ -7,6 +7,7 @@ namespace MSSTC4PHP\ValueObject\Financial\Doctrine\Tests\Unit\Contract;
 use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Types\Type;
 use MSSTC4PHP\ValueObject\Financial\Doctrine\Orm\TypeRegistrar;
+use MSSTC4PHP\ValueObject\Financial\Doctrine\Tests\Support\Samples;
 use MSSTC4PHP\ValueObject\Financial\Internal\EmvcoTlv;
 use MSSTC4PHP\ValueObject\Financial\PaymentQr\Epc\EpcQr;
 use MSSTC4PHP\ValueObject\Financial\PaymentQr\Japan\JpqrCode;
@@ -23,7 +24,7 @@ final class ColumnLengthsFollowTheLibraryBoundsTest extends TestCase
 
     /**
      * Fixed-width identifiers and the references have no constant in the library; the at-max samples of the string
-     * type tests prove them. The QR-bill is not a constant either: 997 is SIX's published maximum, and the string
+     * type tests prove them. The QR-bill is not a constant either: 997 is SIX IG 2.3 section 6.2 (quoted in FINANCE.md), and the string
      * type tests store the longest payload the element limits of Table 8 allow (902 characters).
      *
      * @return iterable<string, array{non-empty-string, int}>
@@ -47,6 +48,14 @@ final class ColumnLengthsFollowTheLibraryBoundsTest extends TestCase
         );
         // SQL Server NVARCHAR and Oracle VARCHAR2 stop at 4000.
         self::assertLessThanOrEqual(self::VARCHAR_LIMIT, $bound);
+    }
+
+    public function testTheLongestTable8QrBillIs902CharactersAndFitsTheColumn(): void
+    {
+        $length = \strlen(Samples::longestQrBill()->value);
+
+        self::assertSame(902, $length);
+        self::assertLessThan(997, $length);
     }
 
     public function testAnEmvcoPayloadBoundAboveTheVarcharLimitMapsToAClob(): void

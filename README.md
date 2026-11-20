@@ -76,7 +76,7 @@ collation (MySQL `utf8mb4_bin`).
 | `fin_creditor_reference` | `Reference\CreditorReference` | 25 | `RF` + 2 + up to 21, stored compact |
 | `fin_epc_qr` | `PaymentQr\Epc\EpcQr` | 331 | `EpcQr::MAX_LENGTH` = 331 |
 | `fin_jpqr_code` | `PaymentQr\Japan\JpqrCode` | 512 | `JpqrCode::MAX_BYTES` = 512 (bytes, so at most 512 characters) |
-| `fin_qr_bill` | `PaymentQr\Swiss\QrBill` | 997 | SIX IG 2.3 maximum of the Swiss QR Code; the longest payload Table 8 allows is 902 characters |
+| `fin_qr_bill` | `PaymentQr\Swiss\QrBill` | 997 | SIX IG 2.3 section 6.2, 997 characters including separators; the longest payload Table 8 allows is 902 characters |
 | `fin_merchant_presented_qr` | `PaymentQr\Emvco\MerchantPresentedQr` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
 | `fin_pix_br_code` | `PaymentQr\Brazil\PixBrCode` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
 | `fin_prompt_pay_qr` | `PaymentQr\Thailand\PromptPayQr` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
