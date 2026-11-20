@@ -30,5 +30,13 @@ enforces it. Do not edit `.php-cs-fixer.dist.php`, `rector.php`, `phpstan*.neon`
 
 ## Adding a class of `vo-finance`
 
-Every non-abstract value object needs one ORM and one ODM type named `fin_<snake_name>` (column length = the class's
-maximum length; above 4000 characters the text type), registered in both `TypeRegistrar`s.
+Every non-abstract value object that is a `ValueObject` needs one ORM and one ODM type named `fin_<snake_name>` (snake
+case of the class short name; column length = the class's maximum length; above 4000 characters, or with no bound in
+the library, the text type), registered in both `TypeRegistrar`s. Then:
+
+- add a sample to `tests/Support/Samples.php::strings()` (name, canonical sample, length, at-max flag) and list text
+  types in `TEXT_TYPES`;
+- `EveryFinanceClassHasATypeTest` fails until both branches map the class, and its count assertion (25) must be bumped;
+- add the bound to `ColumnLengthsFollowTheLibraryBoundsTest` when the class has a constant;
+- classes that are not `ValueObject` (`QrBillAddress`, `MerchantAccount`, `DataObject`, enums, `Internal\`) get no type;
+- update the README table.

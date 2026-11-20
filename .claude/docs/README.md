@@ -7,6 +7,6 @@ Engineer notes for `msstc4php/vo-finance-doctrine`. Team-readable, not user-faci
 | [architecture.md](architecture.md) | Layout and the deptrac rule |
 | [conventions.md](conventions.md) | Naming of types, test layout |
 | [integrations.md](integrations.md) | The packages this bridge binds |
-| [known-issues.md](known-issues.md) | Quirks of the scaffold |
+| [known-issues.md](known-issues.md) | Accepted CI state, test quirks |
 
 Related: `../vo-base-doctrine/.claude/docs/` (the abstract types), `../vo-finance/.claude/docs/` (the value objects).
