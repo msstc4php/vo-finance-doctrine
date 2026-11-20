@@ -43,16 +43,26 @@ private QrBill $qrBill;
 
 Every name is `fin_` plus the snake_case of the class short name (`PaymentCardNumber` is `fin_payment_card_number`,
 `Gost56042Payload` is `fin_gost56042_payload`). The ORM column is `VARCHAR(n)`, `n` being the characters of the longest
-value the class accepts. A type with no bound in the library, or a bound above 4000 characters (the VARCHAR limit of SQL
-Server and Oracle), maps to vo-base-doctrine's `AbstractTextVoType`, a CLOB/TEXT column; a TEXT column cannot carry a
-plain index on every platform (MySQL needs a prefix length), so index a derived key instead. The ODM field is a BSON
-string without a length.
+value the class accepts. A type with no bound in the library, or a bound above 4000 characters (Oracle's `VARCHAR2`
+holds 4000 bytes, SQL Server's `NVARCHAR` 4000 characters), maps to vo-base-doctrine's `AbstractTextVoType`, a
+CLOB/TEXT column; a TEXT column cannot carry a plain index on every platform (MySQL needs a prefix length), so index a
+derived key instead. The ODM field is a BSON string without a length.
+
+**Characters, not bytes.** `n` counts characters, and an FISN, an EPC payload or a QR-bill payload may hold accented
+letters, which take two bytes in UTF-8. Oracle sizes `VARCHAR2(n)` in bytes by default and SQL Server `VARCHAR(n)`
+without a UTF-8 collation too, so such a value can overflow the column (ORA-12899). Use character-length semantics
+(Oracle `NLS_LENGTH_SEMANTICS=CHAR`, SQL Server `NVARCHAR` or a UTF-8 collation) or a text type there.
 
 On write a type accepts only its own value-object class: an `Isin` given to `fin_mic` throws `InvalidArgumentException`.
 A stored value that no longer parses throws the value object's own exception on read, not a DBAL `ConversionException`.
 
 Values are stored as the value object holds them: card numbers without spaces, an EPC or Swiss QR-bill payload with its
 line separators (LF or CRLF) untouched, full unmasked (`masked()` is for display).
+
+> **PCI DSS.** `fin_payment_card_number` stores the full PAN in clear text. PCI DSS 4.0 requirement 3.5.1 requires a
+> stored PAN to be unreadable (truncation, tokenisation, an index token or strong cryptography). This type does none
+> of that: encryption at rest and the PCI scope of the database are the application's job. Prefer storing a token, or
+> only `masked()` / `last4()` in a plain column, and use this type only inside a PCI-scoped, encrypted store.
 
 **Collation.** Identifiers and payloads are case-sensitive in part (Pix keys, QR-bill text, payment links). Under a
 case-insensitive collation two values that differ only in case collide in a unique index; give such columns a binary
@@ -82,9 +92,9 @@ collation (MySQL `utf8mb4_bin`).
 | `fin_prompt_pay_qr` | `PaymentQr\Thailand\PromptPayQr` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
 | `fin_duit_now_qr` | `PaymentQr\Malaysia\DuitNowQr` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
 | `fin_khqr_code` | `PaymentQr\Cambodia\KhqrCode` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH` |
-| `fin_gost56042_payload` | `PaymentQr\Ru\Gost56042Payload` | CLOB (no bound) | the library sets no length bound |
-| `fin_sbp_payment_link` | `PaymentQr\Ru\SbpPaymentLink` | CLOB (no bound) | the library sets no length bound |
-| `fin_upi_payment_uri` | `PaymentQr\India\UpiPaymentUri` | CLOB (no bound) | the library sets no length bound |
+| `fin_gost56042_payload` | `PaymentQr\Ru\Gost56042Payload` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH`, the shared abuse bound |
+| `fin_sbp_payment_link` | `PaymentQr\Ru\SbpPaymentLink` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH`, the shared abuse bound |
+| `fin_upi_payment_uri` | `PaymentQr\India\UpiPaymentUri` | CLOB (bound 7089) | `EmvcoTlv::MAX_PAYLOAD_LENGTH`, the shared abuse bound |
 
 ## License
 
