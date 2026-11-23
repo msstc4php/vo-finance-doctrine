@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.0.0] - unreleased
+
+First stable release: from here on a breaking change needs 2.0.
+
+**Backward compatibility (README, "Backward compatibility").** Type names (`fin_*`) and ORM column lengths are frozen
+for 1.x; the lengths are vo-finance's `MAX_LENGTH` constants, frozen there too. vo-finance never refuses in a minor a
+value an earlier 1.x release accepted, so stored rows keep hydrating across 1.x upgrades.
+
+### Changed
+
+- Requires `msstc4php/vo-finance ^1.0` (was `^0.2`) and `msstc4php/vo-base-doctrine ^1.3` (was `^1.2`).
+- Every ORM string type takes its column length from the value object's public `MAX_LENGTH` instead of a literal; the
+  contract test no longer reads private or `@internal` constants through reflection.
+- `fin_valor` is `VARCHAR(12)` (was `VARCHAR(9)`): `Valor::MAX_LENGTH` is 12, room above the nine characters accepted.
+
+### Upgrading from 0.x
+
+- Run a schema diff once: only `fin_valor` widens from 9 to 12 characters. No type was renamed or removed, and no
+  stored string changed (see vo-finance's 1.0.0 entry for its API changes).
+- From vo-base-doctrine's deprecated `vo_credit_card_number`: map the column as `fin_payment_card_number` (also
+  `VARCHAR(19)`) and the property as `PaymentCardNumber`; the stored strings are the same.
+
 ## [0.2.0] - 2026-11-23
 
 ### Changed
