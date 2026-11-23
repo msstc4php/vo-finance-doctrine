@@ -21,6 +21,6 @@ final class FisnType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 35;
+        return Fisn::MAX_LENGTH;
     }
 }

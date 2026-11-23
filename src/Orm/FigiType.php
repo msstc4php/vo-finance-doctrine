@@ -21,6 +21,6 @@ final class FigiType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 12;
+        return Figi::MAX_LENGTH;
     }
 }

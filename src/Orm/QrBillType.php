@@ -21,6 +21,6 @@ final class QrBillType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 997;
+        return QrBill::MAX_LENGTH;
     }
 }

@@ -21,6 +21,6 @@ final class LeiType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 20;
+        return Lei::MAX_LENGTH;
     }
 }

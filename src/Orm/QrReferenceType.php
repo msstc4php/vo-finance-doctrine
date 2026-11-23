@@ -21,6 +21,6 @@ final class QrReferenceType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 27;
+        return QrReference::MAX_LENGTH;
     }
 }

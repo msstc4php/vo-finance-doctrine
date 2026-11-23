@@ -21,6 +21,6 @@ final class MicType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 4;
+        return Mic::MAX_LENGTH;
     }
 }

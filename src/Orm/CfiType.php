@@ -21,6 +21,6 @@ final class CfiType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 6;
+        return Cfi::MAX_LENGTH;
     }
 }

@@ -21,6 +21,6 @@ final class CreditorReferenceType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 25;
+        return CreditorReference::MAX_LENGTH;
     }
 }

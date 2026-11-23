@@ -21,6 +21,6 @@ final class UpiType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 12;
+        return Upi::MAX_LENGTH;
     }
 }

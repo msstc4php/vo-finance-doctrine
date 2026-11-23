@@ -21,6 +21,6 @@ final class WknType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 6;
+        return Wkn::MAX_LENGTH;
     }
 }

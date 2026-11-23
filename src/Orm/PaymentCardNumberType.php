@@ -28,6 +28,6 @@ final class PaymentCardNumberType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 19;
+        return PaymentCardNumber::MAX_LENGTH;
     }
 }

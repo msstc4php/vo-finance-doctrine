@@ -21,6 +21,6 @@ final class SedolType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 7;
+        return Sedol::MAX_LENGTH;
     }
 }

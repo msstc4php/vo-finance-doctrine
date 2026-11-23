@@ -21,6 +21,6 @@ final class JpqrCodeType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 512;
+        return JpqrCode::MAX_LENGTH;
     }
 }

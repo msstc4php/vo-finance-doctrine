@@ -21,6 +21,6 @@ final class EpcQrType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 331;
+        return EpcQr::MAX_LENGTH;
     }
 }

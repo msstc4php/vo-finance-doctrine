@@ -92,7 +92,7 @@ final class Samples
         yield 'mic' => ['fin_mic', Mic::from('XNAS'), 4, self::BAD_STORED, true];
         yield 'sedol' => ['fin_sedol', Sedol::from('0263494'), 7, self::BAD_STORED, true];
         yield 'wkn' => ['fin_wkn', Wkn::from('716460'), 6, self::BAD_STORED, true];
-        yield 'valor' => ['fin_valor', Valor::from('123456789'), 9, self::BAD_STORED, true];
+        yield 'valor' => ['fin_valor', Valor::from('123456789'), 12, self::BAD_STORED, false];
         yield 'cfi' => ['fin_cfi', Cfi::from('ESVUFR'), 6, self::BAD_STORED, true];
         yield 'lei' => ['fin_lei', Lei::from('F50EOCWSQFAUVO9Q8Z97'), 20, self::BAD_STORED, true];
         yield 'payment card number' => ['fin_payment_card_number', PaymentCardNumber::from('4111111111111111110'), 19, self::BAD_STORED, true];

@@ -21,6 +21,6 @@ final class ValorType extends AbstractStringVoType
     #[Override]
     protected function columnLength(): int
     {
-        return 9;
+        return Valor::MAX_LENGTH;
     }
 }
