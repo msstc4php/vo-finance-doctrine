@@ -21,6 +21,12 @@ value an earlier 1.x release accepted, so stored rows keep hydrating across 1.x 
   stored string changed (see vo-finance's 1.0.0 entry for its API changes).
 - From vo-base-doctrine's deprecated `vo_credit_card_number`: map the column as `fin_payment_card_number` (also
   `VARCHAR(19)`) and the property as `PaymentCardNumber`; the stored strings are the same.
+- No data check is needed before the migration. Widening `fin_valor` from 9 to 12 never truncates. A
+  `vo_credit_card_number` row holds the same canonical digits `fin_payment_card_number` stores, and `PaymentCardNumber`
+  accepts a superset of `CreditCardNumber` (10 to 19 digits against 12 to 19, Luhn in both), so every row hydrates.
+  vo-finance 1.0 accepts every value 0.2.0 accepted, so 0.x rows of the other types load unchanged. On Oracle and SQL
+  Server, check the character-length semantics of `fin_fisn`, `fin_epc_qr` and `fin_qr_bill` (README, "Characters, not
+  bytes").
 
 ## [0.2.0] - 2026-11-23
 

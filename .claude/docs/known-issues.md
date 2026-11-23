@@ -15,3 +15,6 @@
   above the 4000 limit).
 - `Samples::strings()` can yield the same label key twice only by mistake; build lists from it with `foreach`, not
   `iterator_to_array()` plus `array_column()` (that silently dropped rows once).
+- 0.x rows never throw on read in 1.0 (fix10 CR-006, checked 2026-11-23 UTC): vo-finance 1.0 changed no `parse()` rule
+  except messages (only the new `fromParts()` and the factories validate differently), and `PaymentCardNumber` accepts
+  every `CreditCardNumber` value. Only rows written outside the types can fail hydration.

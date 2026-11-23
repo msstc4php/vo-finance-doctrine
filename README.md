@@ -110,12 +110,14 @@ declaration, so a schema diff never comes from an upgrade within 1.x. The length
 constants, which vo-finance freezes too; a type for a new vo-finance class comes in a minor release.
 
 vo-finance never refuses in a minor a value an earlier 1.x release accepted, so a stored value keeps hydrating across
-1.x upgrades; a check that gets a source later is reported by a `hasValid…()` method there. A row that does not parse
-(written outside the types, or by 0.x) throws the value object's own exception on read.
+1.x upgrades; a check that gets a source later is reported by a `hasValid…()` method there. Rows written by 0.x keep
+loading too: vo-finance 1.0 accepts every value 0.2.0 accepted. Only a row written outside the types that the value
+object refuses throws the value object's own exception on read.
 
 Upgrading from 0.x: `fin_valor` is `VARCHAR(12)` (was 9), so a schema diff widens that column once; every other
 declaration is unchanged. From vo-base-doctrine's deprecated `vo_credit_card_number`: map the column as
-`fin_payment_card_number` (`VARCHAR(19)`); the stored strings are the same.
+`fin_payment_card_number` (`VARCHAR(19)`); the stored strings are the same. No data check is needed before either
+step (see the CHANGELOG).
 
 ## License
 
