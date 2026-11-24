@@ -34,7 +34,7 @@ Runtime requirements: `msstc4php/vo-finance ^1.0`, `msstc4php/vo-base-doctrine ^
 ## Usage
 
 Bare Doctrine: call `Orm\TypeRegistrar::registerAll()` (or `Odm\TypeRegistrar::registerAll()`) once at bootstrap.
-Symfony: map `TypeRegistrar::types()` under `doctrine.dbal.types` (ORM) or `doctrine_mongodb.odm.types` (ODM).
+Symfony: map `TypeRegistrar::types()` under `doctrine.dbal.types` (ORM) or the top-level `doctrine_mongodb.types` (ODM).
 
 ```php
 #[ORM\Column(type: 'fin_qr_bill')]
